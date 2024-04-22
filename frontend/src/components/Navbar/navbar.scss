@@ -1,0 +1,120 @@
+@import "../../responsive.scss";
+
+nav{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100px;
+  color: #2A2A2A;
+  a {
+    transition: all 0.4s ease;
+
+    @include sm {
+      display: none;
+    }
+
+    &:hover {
+      scale: 1.05;
+    }
+  }
+
+  .links {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+    flex: 3;
+    color: white;
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: bold;
+      font-size: 20px;
+      color: white;
+
+      img {
+        width: 40px;
+      }
+
+      span {
+        @include md {
+          display: none;
+        }
+
+        @include sm {
+          display: initial;
+        }
+      }
+    }
+  }
+
+  .sign {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex: 2;
+    height: 100%;
+    background-color: #F0F0F0;
+
+    @include md {
+      background-color: transparent;
+    }
+
+    a {
+      padding: 12px 24px;
+      margin: 20px;
+    }
+
+    .register {
+      color: white;
+      background-color: #2A2A2A;
+    }
+
+    .menuIcon {
+      display: none;
+      z-index: 999;
+
+      img {
+        width: 36px;
+        cursor: pointer;
+      }
+
+      @include sm {
+        display: initial;
+      }
+    }
+
+    .menu {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      top: 0;
+      right: -50%;
+      width: 50%;
+      height: 100vh;
+      background-color: black;
+      color: white;
+      transition: all 1s ease;
+      font-size: 24px;
+
+      &.active {
+        right: 0;
+      }
+
+      .link {
+        display: flex;
+        align-items: center;
+        width: 200px
+      }
+
+      @include sm {
+        a{
+          display: initial;
+        }
+      }
+    }
+  }
+}
