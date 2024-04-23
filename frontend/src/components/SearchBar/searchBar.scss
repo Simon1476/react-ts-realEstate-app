@@ -1,0 +1,92 @@
+@import "../../responsive.scss";
+
+.searchBar {
+  .type {
+
+    button {
+      padding: 16px 36px;
+      border: 1px solid #737373;
+      border-bottom: none;
+      background-color: #797979;
+      font-weight: bold;
+      cursor: pointer;
+
+
+      &.active {
+        background-color: #fff;
+        color: black;
+      }
+
+      &:first-child {
+        border-top-left-radius: 5px;
+        border-right: none;
+
+        @include sm {
+          // border-bottom: 1px solid #999;
+        }
+      }
+
+      &:last-child {
+        border-top-right-radius: 5px;
+        border-left: none;
+      }
+    }
+  }
+
+  form {
+    display: flex;
+    justify-content: space-between;
+    gap: 5px;
+    height: 64px;
+    border: 1px solid #737373;
+
+    @include sm {
+      flex-direction: column ;
+      border: none;
+    }
+
+    input {
+      width: 200px;
+      padding: 0px 10px;
+      border: none;
+
+      @include lg {
+        padding: 0px 5px;
+
+        &:nth-child(2), &:nth-child(3) {
+          width: 140px;
+        }
+      }
+
+      @include md {
+       width: 200px;
+        &:nth-child(2), &:nth-child(3) {
+          width: 200px;
+        }
+      }
+
+      @include sm {
+        width: auto;
+        &:nth-child(2), &:nth-child(3) {
+          width: auto;
+        }
+        padding: 20px;
+        border-radius: 5px;
+        border: 1px solid black;
+      }
+    }
+
+    button {
+      flex: 1;
+      border: none;
+      color: white;
+      background-color: #2A2A2A;
+      cursor: pointer;
+
+      @include sm {
+        border-radius: 5px;
+        padding: 10px;
+      }
+    }
+  }
+}
