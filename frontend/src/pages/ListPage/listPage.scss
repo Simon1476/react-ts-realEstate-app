@@ -1,0 +1,30 @@
+.listPage {
+  display: flex;
+  height: 100%;
+
+  .listContainer {
+    flex: 3;
+    height: 100%;
+    .wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 50px;
+      height: 100%;
+      padding-right: 50px;
+      padding-bottom: 50px;
+      overflow-y: scroll;
+    }
+
+    .wrapper::-webkit-scrollbar {
+      display: none; /* 크롬, 사파리, 오페라, 엣지 */
+    }
+  }
+
+  
+
+  .mapContainer {
+    flex: 2;
+    height: 100%;
+    background-color: #F0F0F0;
+  }
+}
