@@ -1,0 +1,150 @@
+.singlePage {
+  display: flex;
+  height: 100%;
+
+  .details {
+    flex: 3;
+
+    .wrapper {
+      padding-right: 50px;
+
+      .info {
+        margin-top: 50px;
+        .top {
+          display: flex;
+          justify-content: space-between;
+          .post {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            h1 {
+              font-weight: 400;
+            }
+
+            .address {
+              display: flex;
+              align-items: center;
+              gap: 5px;
+              font-size: 18px;
+
+              .icon {
+                color: red;
+              }
+            }
+
+            .price {
+              display: flex;
+              align-items: center;
+              gap: 5px;
+              font-size: 18px;
+              .icon {
+                color: green;
+              }
+            }
+          }
+
+          .user {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            padding: 0px 50px;
+            border-radius: 10px;
+            background-color: #eaded1;
+            font-weight: 600;
+
+            img {
+              width: 50px;
+              height: 50px;
+              border-radius: 50%;
+              object-fit: cover;
+            }
+          }
+          
+        }
+
+        .bottom {
+          margin-top: 50px;
+          color:#555;
+          line-height: 24px;
+        }
+      }
+    }
+  }
+
+  .features {
+    flex: 2;
+    height: 100%;
+    background-color: #F0F0F0;
+    .wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      padding: 0px 20px;
+    }
+
+    .title {
+      margin-bottom: 10px;
+      font-weight: bold;
+      font-size: 18px;
+    }
+
+    .feature {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      .featureText {
+        
+        span {
+          font-weight: bold;
+        }
+
+        p {
+          font-size: 16px;
+        }
+      }
+    }
+
+    .rental-agreement {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      padding: 20px 10px;
+      color: white;
+      background-color: #2A2A2A;
+      border-radius: 10px;
+    }
+
+    .roomSizes {
+      display: flex;
+      justify-content: space-between;
+      padding: 20px 10px;
+      color: white;
+      background-color: #2A2A2A;
+      border-radius: 10px;
+      
+      .size {
+        display: flex;
+        gap: 10px;
+      }
+    }
+
+    .places {
+      display: flex;
+      justify-content: space-between;
+      padding: 20px 10px;
+      color: white;
+      background-color: #2A2A2A;
+      border-radius: 10px;
+      
+      .place {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+    }
+
+  }
+}
