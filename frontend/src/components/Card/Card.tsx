@@ -9,55 +9,35 @@ import {
   faLocationDot,
   faSackDollar,
 } from "@fortawesome/free-solid-svg-icons";
+import { CardItem } from "../../types/components/card";
 
-type Props = {
-  id: number;
-  title: string;
-  img: string;
-  bedroom: number;
-  bathroom: number;
-  price: number;
-  address: string;
-  latitude: number;
-  longitude: number;
-};
-const Card = ({
-  id,
-  title,
-  img,
-  bedroom,
-  bathroom,
-  price,
-  address,
-  latitude,
-  longitude,
-}: Props) => {
+const Card = ({ item }: { item: CardItem }) => {
   return (
     <div className="card">
-      <Link to={`/${id}`} className="imgContainer">
-        <img src={img} alt="" />
+      <Link to={`/${item.id}`} className="imgContainer">
+        <img src={item.img} alt="" />
       </Link>
       <div className="textContainer">
         <h2 className="title">
-          <Link to={`/${id}`}>{title}</Link>
+          <Link to={`/${item.id}`}>{item.title}</Link>
         </h2>
         <p className="address">
           <FontAwesomeIcon className="icon" icon={faLocationDot} />
-          <span>{address}</span>
+          <span>{item.address}</span>
         </p>
         <p className="price">
           <FontAwesomeIcon className="icon" icon={faSackDollar} />
-          <span>{price}</span>
+          <span>{item.price}</span>
         </p>
         <div className="bottom">
           <div className="features">
             <div className="feature">
               <FontAwesomeIcon className="icon" icon={faBed} />
-              <span>{bedroom} bedroom</span>
+              <span>{item.bedroom} bedroom</span>
             </div>
             <div className="feature">
               <FontAwesomeIcon className="icon" icon={faBath} />
-              <span>{bedroom} bedroom</span>
+              <span>{item.bedroom} bedroom</span>
             </div>
           </div>
           <div className="icons">
