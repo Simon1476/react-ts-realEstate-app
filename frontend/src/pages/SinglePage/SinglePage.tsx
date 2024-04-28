@@ -1,5 +1,4 @@
 import Slider from "../../components/Slider/Slider";
-import Map from "../../components/Map/Map";
 
 import { singlePostData, userData } from "../../lib/dummydata";
 
@@ -21,6 +20,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import "./singlePage.scss";
+import SinglePageMap from "../../components/SinglePageMap/SinglePageMap";
 
 const SinglePage = () => {
   return (
@@ -117,7 +117,7 @@ const SinglePage = () => {
           </div>
           <p className="title">Location</p>
           <div className="mapContainer">
-            {/* <Map items={singlePostData}/> */}
+            <SinglePageMap data={singlePostData} />
           </div>
           <div className="buttons">
             <button>
