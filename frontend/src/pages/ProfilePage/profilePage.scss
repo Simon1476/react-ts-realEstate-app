@@ -1,0 +1,96 @@
+@import "../../responsive.scss";
+
+.profilePage {
+  display: flex;
+  height: 100%;
+
+  @include md {
+    flex-direction: column;
+    overflow: scroll;
+  }
+  
+  .details {
+    flex: 3;
+    overflow-y: scroll;
+    padding-bottom: 50px;
+
+    @include md {
+      flex: none;
+      height: max-content;
+    }
+
+    .wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 50px;
+      padding-right: 50px;
+
+      @include md {
+        // padding-right: 0;
+      }
+      .title {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        h1 {
+          font-weight: 300;
+        }
+
+        button {
+          padding: 12px 24px;
+          color: white;
+          background-color: #2A2A2A;
+          border: none;
+          cursor: pointer;
+        }
+      }
+
+      .info {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
+        span {
+          display: flex;
+          align-items: center;
+          gap: 20px;
+        }
+
+        img {
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          object-fit: cover;
+        }
+      }
+    }
+  }
+
+
+  .details::-webkit-scrollbar {
+    display: none; /* 크롬, 사파리, 오페라, 엣지 */
+  }
+
+  .chatContainer {
+    flex:2;
+    height: 100%;
+    background-color: #F0F0F0;
+
+    
+    @include md {
+      flex: none;
+      height: max-content;
+    }
+
+    .wrapper {
+      padding: 0px 20px;
+      height: 100%;
+    }
+  }
+  
+}
+
+// .profilePage::-webkit-scrollbar {
+//   display: none; /* 크롬, 사파리, 오페라, 엣지 */
+// }
