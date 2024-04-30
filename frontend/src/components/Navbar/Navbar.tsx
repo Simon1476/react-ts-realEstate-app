@@ -10,9 +10,12 @@ import {
   faLock,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+
+  const user = true;
   return (
     <nav>
       <div className="links">
@@ -26,10 +29,27 @@ const Navbar = () => {
         <a href="/">Agents</a>
       </div>
       <div className="sign">
-        <a href="/">Sign in</a>
-        <a href="/" className="register">
-          Sign up
-        </a>
+        {user ? (
+          <div className="user">
+            <img
+              src="https://cdn.pixabay.com/photo/2024/03/14/08/52/pug-8632718_1280.jpg"
+              alt=""
+            />
+            <span>Simon</span>
+            <Link to="/profile" className="profile">
+              <div className="notification">5</div>
+              <span>Profile</span>
+            </Link>
+          </div>
+        ) : (
+          <>
+            <a href="/">Sign in</a>
+            <a href="/" className="register">
+              Sign up
+            </a>
+          </>
+        )}
+
         <div className="menuIcon">
           <img src="/menu.png" alt="" onClick={() => setOpen(!open)} />
         </div>
