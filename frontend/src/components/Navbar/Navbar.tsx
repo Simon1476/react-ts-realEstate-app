@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import "./navbar.scss";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -11,11 +11,13 @@ import {
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
 
-  const user = true;
+  const { currentUser } = useContext(AuthContext);
+
   return (
     <nav>
       <div className="links">
@@ -29,13 +31,16 @@ const Navbar = () => {
         <a href="/">Agents</a>
       </div>
       <div className="sign">
-        {user ? (
+        {currentUser ? (
           <div className="user">
             <img
-              src="https://cdn.pixabay.com/photo/2024/03/14/08/52/pug-8632718_1280.jpg"
+              src={
+                currentUser.avatar ||
+                "https://cdn.pixabay.com/photo/2024/03/14/08/52/pug-8632718_1280.jpg"
+              }
               alt=""
             />
-            <span>Simon</span>
+            <span>{currentUser.username}</span>
             <Link to="/profile" className="profile">
               <div className="notification">5</div>
               <span>Profile</span>
@@ -43,8 +48,8 @@ const Navbar = () => {
           </div>
         ) : (
           <>
-            <a href="/">Sign in</a>
-            <a href="/" className="register">
+            <a href="/login">Sign in</a>
+            <a href="/register" className="register">
               Sign up
             </a>
           </>
