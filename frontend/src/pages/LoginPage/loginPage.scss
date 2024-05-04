@@ -47,16 +47,18 @@
       }
     }
 
-    .imgContainer {
-      flex: 2;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background-color: #fcf5f3;
+  }
 
-      img {
-        width: 100%;
-      }
+  
+  .imgContainer {
+    flex: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fcf5f3;
+    height: 100%;
+    img {
+      width: 100%;
     }
   }
 }
