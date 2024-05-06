@@ -49,7 +49,10 @@ export const updateUser: RequestHandler = async (req, res, next) => {
         ...(avatar && { avatar }),
       },
     });
-    res.status(200).json(updatedUser);
+
+    const { password: userPassword, ...rest } = updatedUser;
+
+    res.status(200).json(rest);
   } catch (error) {
     res.status(500).json({ message: "Failed to get users!" });
   }
@@ -69,6 +72,6 @@ export const deleteUser: RequestHandler = async (req, res, next) => {
     });
     res.status(200).json({ message: "User deleted!" });
   } catch (error) {
-    res.status(500).json({ message: "Failed to get users!" });
+    res.status(500).json({ message: "Failed to delete user!" });
   }
 };
