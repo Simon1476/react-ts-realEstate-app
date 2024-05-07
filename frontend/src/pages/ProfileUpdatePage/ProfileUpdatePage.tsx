@@ -1,16 +1,75 @@
 import { useContext, useState } from "react";
-import "./profileUpdatePage.scss";
 import { AuthContext } from "../../context/AuthContext";
+import axios from "axios";
+import apiRequest from "../../lib/apiRequest";
+
+import "./profileUpdatePage.scss";
+import { useNavigate } from "react-router-dom";
 
 const ProfileUpdatePage = () => {
   const { currentUser, updateUser } = useContext(AuthContext);
-  const [error, setError] = useState("");
-  const [avatar, setAvatar] = useState<string[]>([]);
 
+  const [file, setFile] = useState<File | null>(null);
+  const [caption, setCaption] = useState("");
+
+  const [error, setError] = useState("");
+  const [avatar, setAvatar] = useState(currentUser.avatar);
+
+  const navigate = useNavigate();
+
+  const handleUploadImage = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+
+    if (file) {
+      formData.append("image", file);
+    }
+
+    formData.append("caption", caption);
+
+    await apiRequest.post(`/users/img/${currentUser.id}`, formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = e.target.files?.[0];
+    if (selectedFile) {
+      setFile(selectedFile);
+    } else {
+      // Handle the case where no file is selected (optional)
+      console.log("No file selected");
+    }
+  };
+
+  const handleUpdateUser = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.currentTarget);
+
+    const { username, email, password } = Object.fromEntries(formData);
+
+    try {
+      await apiRequest.get(`/users/img/${currentUser.id}`);
+
+      const res = await apiRequest.put(`/users/${currentUser.id}`, {
+        username,
+        email,
+        password,
+      });
+      updateUser(res.data);
+      navigate("/profile");
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        setError(error.response?.data.message);
+      }
+    }
+  };
   return (
     <div className="profileUpdatePage">
       <div className="formContainer">
-        <form action="">
+        <form onSubmit={handleUpdateUser}>
           <h1>Update Profile</h1>
           <div className="input-group">
             <label htmlFor="username">Username</label>
@@ -40,10 +99,26 @@ const ProfileUpdatePage = () => {
       </div>
       <div className="sideContainer">
         <img
-          src={avatar[0] || currentUser.avatar}
+          src={avatar || "/noavatar.jpg"}
           alt="Avatar image"
           className="avatar"
         />
+        <form onSubmit={handleUploadImage}>
+          <input
+            onChange={handleFileChange}
+            type="file"
+            name="image"
+            accept="image/*"
+          ></input>
+          <input
+            value={caption}
+            onChange={(e) => setCaption(e.target.value)}
+            type="text"
+            name="caption"
+            placeholder="Caption"
+          ></input>
+          <button type="submit">Submit</button>
+        </form>
       </div>
     </div>
   );
