@@ -22,7 +22,7 @@ export const getUser: RequestHandler = async (req, res, next) => {
     res.status(200).json(user);
   } catch (error) {
     console.log(error);
-    res.status(500).json({ message: "Failed to get users!" });
+    res.status(500).json({ message: "Failed to get user!" });
   }
 };
 
