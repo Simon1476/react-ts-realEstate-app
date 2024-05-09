@@ -1,11 +1,28 @@
+enum Type {
+  buy = "buy",
+  rent = "rent",
+}
+
+enum Property {
+  apartment = "apartment",
+  house = "house",
+  condo = "condo",
+  land = "land",
+}
+
 export type CardItem = {
-  id: number;
+  id: string;
   title: string;
-  img: string;
+  price: number;
+  images: string[];
+  address: string;
+  city: string;
   bedroom: number;
   bathroom: number;
-  price: number;
-  address: string;
-  latitude: number;
-  longitude: number;
+  latitude: string;
+  longitude: string;
+  type: Type;
+  property: Property;
+  createdAt: Date;
+  userId: string;
 };

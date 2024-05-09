@@ -1,7 +1,4 @@
 import Slider from "../../components/Slider/Slider";
-
-import { singlePostData, userData } from "../../lib/dummydata";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBath,
@@ -21,32 +18,42 @@ import {
 
 import "./singlePage.scss";
 import SinglePageMap from "../../components/SinglePageMap/SinglePageMap";
-
+import { useLoaderData } from "react-router-dom";
+import { GetSinglePost } from "../../types/loaders/post";
+import DOMPurify from "dompurify";
 const SinglePage = () => {
+  const post = useLoaderData() as GetSinglePost;
+
+  console.log(post);
   return (
     <div className="singlePage">
       <div className="details">
         <div className="wrapper">
-          <Slider images={singlePostData.images} />
+          <Slider images={post.images} />
           <div className="info">
             <div className="top">
               <div className="post">
-                <h1>{singlePostData.title}</h1>
+                <h1>{post.title}</h1>
                 <div className="address">
                   <FontAwesomeIcon className="icon" icon={faLocationDot} />
-                  <span>{singlePostData.address}</span>
+                  <span>{post.address}</span>
                 </div>
                 <div className="price">
                   <FontAwesomeIcon className="icon" icon={faSackDollar} />
-                  <span>{singlePostData.price}</span>
+                  <span>{post.price}</span>
                 </div>
               </div>
               <div className="user">
-                <img src={userData.img} alt="" />
-                <span>{userData.name}</span>
+                {post.user.avatar && <img src={post.user.avatar[0]} alt="" />}
+                <span>{post.user.username}</span>
               </div>
             </div>
-            <div className="bottom">{singlePostData.description}</div>
+            <div
+              className="bottom"
+              dangerouslySetInnerHTML={{
+                __html: DOMPurify.sanitize(post.postDetail?.desc),
+              }}
+            ></div>
           </div>
         </div>
       </div>
@@ -58,21 +65,29 @@ const SinglePage = () => {
               <FontAwesomeIcon icon={faScrewdriverWrench} />
               <div className="featureText">
                 <span>Utilities</span>
-                <p>Renter is responsible</p>
+                {post.postDetail?.utilities === "owner" ? (
+                  <p>Owner is responsible</p>
+                ) : (
+                  <p>Tenant is responsible</p>
+                )}
               </div>
             </div>
             <div className="feature">
               <FontAwesomeIcon icon={faPaw} />
               <div className="featureText">
                 <span>Pet Policy</span>
-                <p>Pets Allowed</p>
+                {post.postDetail?.pet === "allowed" ? (
+                  <p>Pets Allowed</p>
+                ) : (
+                  <p>Pets not Allowed</p>
+                )}
               </div>
             </div>
             <div className="feature">
               <FontAwesomeIcon icon={faHandHoldingDollar} />
               <div className="featureText">
-                <span>Property Fees</span>
-                <p>Must have 3x the rent in total household income</p>
+                <span>Income Policy</span>
+                <p>{post.postDetail?.income}</p>
               </div>
             </div>
           </div>
@@ -80,15 +95,15 @@ const SinglePage = () => {
           <div className="roomSizes">
             <div className="size">
               <FontAwesomeIcon icon={faUpRightAndDownLeftFromCenter} />
-              <span>24m2</span>
+              <span>{post.postDetail?.size} sqft</span>
             </div>
             <div className="size">
               <FontAwesomeIcon icon={faBed} />
-              <span>2 bed</span>
+              <span>{post.bathroom} bathroom</span>
             </div>
             <div className="size">
               <FontAwesomeIcon icon={faBath} />
-              <span>1 bathroom</span>
+              <span>{post.bedroom} bedroom</span>
             </div>
           </div>
           <p className="title">Nearby Places</p>
@@ -97,27 +112,27 @@ const SinglePage = () => {
               <FontAwesomeIcon icon={faSchool} />
               <div className="placeText">
                 <span>School</span>
-                <p>250m away</p>
+                <p>{post.postDetail?.school} m away</p>
               </div>
             </div>
             <div className="place">
               <FontAwesomeIcon icon={faBus} />
               <div className="placeText">
                 <span>Bus Stop</span>
-                <p>100m away</p>
+                <p>{post.postDetail?.bus} m away</p>
               </div>
             </div>
             <div className="place">
               <FontAwesomeIcon icon={faUtensils} />
               <div className="placeText">
                 <span>Restaurant</span>
-                <p>30m away</p>
+                <p>{post.postDetail?.restaurant} m away</p>
               </div>
             </div>
           </div>
           <p className="title">Location</p>
           <div className="mapContainer">
-            <SinglePageMap data={singlePostData} />
+            <SinglePageMap data={post} />
           </div>
           <div className="buttons">
             <button>
