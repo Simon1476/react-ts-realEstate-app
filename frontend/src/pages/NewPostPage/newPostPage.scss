@@ -1,0 +1,77 @@
+.newPostPage {
+  display: flex;
+  height: 100%;
+
+  .formContainer {
+    flex: 3;
+    overflow: scroll;
+
+    .wrapper {
+      margin: 30px 50px 100px 0px;
+
+      form {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 20px;
+
+        .input-group {
+          display: flex;
+          flex-direction: column;
+          gap: 30px;
+          width: 30%;
+
+          input {
+            padding: 20px;
+            border-radius: 5px;
+            border: 1px solid gray;
+          }
+  
+          select {
+            padding: 20px;
+          }
+  
+          &.description {
+            width: 100%;
+            height: 300px;
+            margin-bottom: 50px;
+  
+            .quill > .ql-container > .ql-editor {
+              height: 200px;
+              font-size: 16px;
+            }
+          }
+        }
+
+       
+
+        .sendButton {
+          width: 30%;
+          color: white;
+          background-color: teal;
+          border-radius: 5px;
+          border: none;
+          font-weight: bold;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+
+  .sideContainer {
+    flex:2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    background-color: #fcf5f3;
+
+    img{
+      width: 50%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 5px;
+    }
+  }
+}
