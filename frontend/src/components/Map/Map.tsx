@@ -9,8 +9,8 @@ import Pin from "../Pin/Pin";
 const Map = ({ data }: { data: CardItem[] }) => {
   return (
     <MapContainer
-      center={[51.505, -0.09]}
-      zoom={13}
+      center={[52.4797, -1.90269]}
+      zoom={7}
       scrollWheelZoom={false}
       className="map"
     >

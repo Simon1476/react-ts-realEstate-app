@@ -23,8 +23,7 @@ import { GetSinglePost } from "../../types/loaders/post";
 import DOMPurify from "dompurify";
 const SinglePage = () => {
   const post = useLoaderData() as GetSinglePost;
-
-  console.log(post);
+  const postDetail = post.postDetail!;
   return (
     <div className="singlePage">
       <div className="details">
@@ -51,7 +50,7 @@ const SinglePage = () => {
             <div
               className="bottom"
               dangerouslySetInnerHTML={{
-                __html: DOMPurify.sanitize(post.postDetail?.desc),
+                __html: DOMPurify.sanitize(postDetail.desc),
               }}
             ></div>
           </div>
