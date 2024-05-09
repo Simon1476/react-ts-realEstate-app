@@ -1,9 +1,31 @@
 import { RequestHandler } from "express";
 import prisma from "../lib/prisma";
+import { CreatePost, Property, Type } from "../types/post";
 
 export const getPosts: RequestHandler = async (req, res, next) => {
+  const query = req.query;
+
+  const city = query.city as string;
+  const type = query.type as Type;
+  const property = query.property as Property;
+  const bathroom = query.bathroom as string;
+  const bedroom = query.bedroom as string;
+  const minPrice = query.minPrice as string;
+  const maxPrice = query.maxPrice as string;
   try {
-    const posts = await prisma.post.findMany();
+    const posts = await prisma.post.findMany({
+      where: {
+        city: city || undefined,
+        type: type || undefined,
+        property: property || undefined,
+        bathroom: parseInt(bathroom) || undefined,
+        bedroom: parseInt(bedroom) || undefined,
+        price: {
+          gte: parseInt(minPrice) || 0,
+          lte: parseInt(maxPrice) || 0,
+        },
+      },
+    });
     res.status(200).json(posts);
   } catch (error) {
     console.log(error);
@@ -18,6 +40,15 @@ export const getPost: RequestHandler = async (req, res, next) => {
       where: {
         id,
       },
+      include: {
+        postDetail: true,
+        user: {
+          select: {
+            username: true,
+            avatar: true,
+          },
+        },
+      },
     });
     res.status(200).json(post);
   } catch (error) {
@@ -27,14 +58,19 @@ export const getPost: RequestHandler = async (req, res, next) => {
 };
 
 export const addPost: RequestHandler = async (req, res, next) => {
-  const body = req.body;
-  const tokenUserId = req.userId;
+  const body = <CreatePost>req.body;
+  const tokenUserId = req.userId || "dd";
 
+  const postData = body.postData;
+  console.log(req.body);
   try {
     const newPost = await prisma.post.create({
       data: {
-        ...body,
+        ...postData,
         userId: tokenUserId,
+        postDetail: {
+          create: body.postDetail,
+        },
       },
     });
     res.status(200).json(newPost);
