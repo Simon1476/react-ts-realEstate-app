@@ -1,36 +1,13 @@
 import express from "express";
 import { deleteUser, getUser, getUsers, updateUser } from "../controllers/user";
 import { verifyToken } from "../middleware/verifyToken";
-import multer from "multer";
-import crypto from "crypto";
-import sharp from "sharp";
 
-import {
-  S3Client,
-  PutObjectCommand,
-  GetObjectCommand,
-} from "@aws-sdk/client-s3";
+import { PutObjectCommand, GetObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+import sharp from "sharp";
+import { bucketName, randomImageName, s3, upload } from "../lib/bucket";
 
 import prisma from "../lib/prisma";
-
-const randomImageName = (bytes = 32) =>
-  crypto.randomBytes(bytes).toString("hex");
-const bucketName = process.env.BUCKET_NAME!;
-const bucketRegion = process.env.BUCKET_REGION!;
-const accessKey = process.env.ACCESS_KEY!;
-const secretAccessKey = process.env.SECRET_ACCESS_KEY!;
-
-const s3 = new S3Client({
-  credentials: {
-    accessKeyId: accessKey,
-    secretAccessKey: secretAccessKey,
-  },
-  region: bucketRegion,
-});
-
-const storage = multer.memoryStorage();
-const upload = multer({ storage: storage });
 
 const userRouter = express.Router();
 
@@ -73,7 +50,6 @@ userRouter.get("/img/:id", async (req, res) => {
 });
 
 userRouter.post("/img/:id", upload.single("image"), async (req, res) => {
-  console.log("??");
   const id = req.params.id;
 
   const buffer = await sharp(req.file?.buffer)
@@ -81,6 +57,7 @@ userRouter.post("/img/:id", upload.single("image"), async (req, res) => {
     .toBuffer();
 
   const imageName = randomImageName();
+
   const params = {
     Bucket: bucketName,
     Key: imageName,
