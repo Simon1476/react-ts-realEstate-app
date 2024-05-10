@@ -1,5 +1,11 @@
 import express from "express";
-import { deleteUser, getUser, getUsers, updateUser } from "../controllers/user";
+import {
+  deleteUser,
+  getUser,
+  getUsers,
+  savePost,
+  updateUser,
+} from "../controllers/user";
 import { verifyToken } from "../middleware/verifyToken";
 
 import { PutObjectCommand, GetObjectCommand } from "@aws-sdk/client-s3";
@@ -82,5 +88,6 @@ userRouter.get("/", getUsers);
 userRouter.get("/:id", verifyToken, getUser);
 userRouter.put("/:id", verifyToken, updateUser);
 userRouter.delete(":/id", verifyToken, deleteUser);
+userRouter.post("/save", verifyToken, savePost);
 
 export default userRouter;

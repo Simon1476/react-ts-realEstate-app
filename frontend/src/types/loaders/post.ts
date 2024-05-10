@@ -45,6 +45,7 @@ export type GetSinglePost = {
   userId: string;
   user: User;
   postDetail: PostDetail | null;
+  isSaved: boolean;
 };
 
 export type GetPosts = {

@@ -1,7 +1,7 @@
 import { RequestHandler } from "express";
 import prisma from "../lib/prisma";
 import { CreatePost, Property, Type } from "../types/post";
-
+import jwt from "jsonwebtoken";
 export const getPosts: RequestHandler = async (req, res, next) => {
   const query = req.query;
 
@@ -52,9 +52,28 @@ export const getPost: RequestHandler = async (req, res, next) => {
         },
       },
     });
-    res.status(200).json(post);
+
+    const token = req.cookies?.token;
+    if (token) {
+      jwt.verify(
+        token,
+        process.env.JWT_SECRET_KEY || "",
+        async (err: any, data: any) => {
+          if (!err) {
+            const saved = await prisma.savedPost.findUnique({
+              where: {
+                userId_postId: {
+                  postId: id,
+                  userId: data.id,
+                },
+              },
+            });
+            res.status(200).json({ ...post, isSaved: saved ? true : false });
+          }
+        }
+      );
+    }
   } catch (error) {
-    console.log(error);
     res.status(500).json({ message: "Failed to get post." });
   }
 };
@@ -64,7 +83,6 @@ export const addPost: RequestHandler = async (req, res, next) => {
   const tokenUserId = req.userId || "dd";
 
   const postData = body.postData;
-  console.log(req.body);
   try {
     const newPost = await prisma.post.create({
       data: {
