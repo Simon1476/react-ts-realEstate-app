@@ -18,12 +18,36 @@ import {
 
 import "./singlePage.scss";
 import SinglePageMap from "../../components/SinglePageMap/SinglePageMap";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import { GetSinglePost } from "../../types/loaders/post";
 import DOMPurify from "dompurify";
+import { useContext, useState } from "react";
+import { AuthContext } from "../../context/AuthContext";
+import apiRequest from "../../lib/apiRequest";
 const SinglePage = () => {
   const post = useLoaderData() as GetSinglePost;
   const postDetail = post.postDetail!;
+
+  const [saved, setSaved] = useState(post.isSaved);
+  const { currentUser } = useContext(AuthContext);
+
+  const navigate = useNavigate();
+
+  const handleSave = async () => {
+    setSaved((prev) => !prev);
+    if (!currentUser) {
+      navigate("/login");
+    }
+
+    try {
+      await apiRequest.post("/users/save", {
+        postId: post.id,
+      });
+    } catch (error) {
+      console.log(error);
+      setSaved((prev) => !prev);
+    }
+  };
   return (
     <div className="singlePage">
       <div className="details">
@@ -138,9 +162,12 @@ const SinglePage = () => {
               <FontAwesomeIcon icon={faEnvelope} />
               Send a Message
             </button>
-            <button>
+            <button
+              onClick={handleSave}
+              style={{ backgroundColor: saved ? "red" : "black" }}
+            >
               <FontAwesomeIcon icon={faBookmark} />
-              Save the Place
+              {saved ? "Place Saved" : "Save the Place"}
             </button>
           </div>
         </div>

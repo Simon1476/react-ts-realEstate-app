@@ -15,7 +15,7 @@ const Card = ({ item }: { item: CardItem }) => {
   return (
     <div className="card">
       <Link to={`/${item.id}`} className="imgContainer">
-        <img src={item.img} alt="" />
+        <img src={item.images[0]} alt="" />
       </Link>
       <div className="textContainer">
         <h2 className="title">
