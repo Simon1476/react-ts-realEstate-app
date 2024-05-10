@@ -12,6 +12,7 @@ export const getPosts: RequestHandler = async (req, res, next) => {
   const bedroom = query.bedroom as string;
   const minPrice = query.minPrice as string;
   const maxPrice = query.maxPrice as string;
+
   try {
     const posts = await prisma.post.findMany({
       where: {
@@ -21,14 +22,15 @@ export const getPosts: RequestHandler = async (req, res, next) => {
         bathroom: parseInt(bathroom) || undefined,
         bedroom: parseInt(bedroom) || undefined,
         price: {
-          gte: parseInt(minPrice) || 0,
-          lte: parseInt(maxPrice) || 0,
+          gte: parseInt(minPrice) || undefined,
+          lte: parseInt(maxPrice) || undefined,
         },
       },
     });
+    // setTimeout(() => {
     res.status(200).json(posts);
+    // }, 3000);
   } catch (error) {
-    console.log(error);
     res.status(500).json({ message: "Failed to get posts." });
   }
 };
