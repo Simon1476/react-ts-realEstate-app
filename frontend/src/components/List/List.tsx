@@ -1,11 +1,11 @@
-import { listData } from "../../lib/dummydata";
+import { GetPosts } from "../../types/loaders/post";
 import Card from "../Card/Card";
 import "./list.scss";
 
-const List = () => {
+const List = ({ posts }: { posts: GetPosts }) => {
   return (
     <div className="list">
-      {listData.map((item) => (
+      {posts.map((item) => (
         <Card key={item.id} item={item} />
       ))}
     </div>

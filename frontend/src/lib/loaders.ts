@@ -19,3 +19,10 @@ export const listPageLoader: LoaderFunction = async ({ request }) => {
     postResponse: postPromise,
   });
 };
+
+export const profilePageLoader = async () => {
+  const postPromise = await apiRequest(`/users/profilePosts`);
+  return defer({
+    postResponse: postPromise,
+  });
+};

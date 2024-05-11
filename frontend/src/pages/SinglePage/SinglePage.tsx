@@ -34,10 +34,11 @@ const SinglePage = () => {
   const navigate = useNavigate();
 
   const handleSave = async () => {
-    setSaved((prev) => !prev);
     if (!currentUser) {
       navigate("/login");
     }
+
+    setSaved((prev) => !prev);
 
     try {
       await apiRequest.post("/users/save", {
