@@ -79,6 +79,7 @@ export const deleteUser: RequestHandler = async (req, res, next) => {
 export const savePost: RequestHandler = async (req, res, next) => {
   const postId = req.body.postId;
   const tokenUserId = req.userId as string;
+
   try {
     const savedPost = await prisma.savedPost.findUnique({
       where: {
@@ -106,5 +107,26 @@ export const savePost: RequestHandler = async (req, res, next) => {
     }
   } catch (error) {
     res.status(500).json({ message: "Failed to delete user!" });
+  }
+};
+
+export const profilePosts: RequestHandler = async (req, res, next) => {
+  const tokenUserId = req.userId;
+  try {
+    const userPosts = await prisma.post.findMany({
+      where: { userId: tokenUserId },
+    });
+
+    const saved = await prisma.savedPost.findMany({
+      where: { userId: tokenUserId },
+      include: {
+        post: true,
+      },
+    });
+    const savedPosts = saved.map((item) => item.post);
+    res.status(200).json({ userPosts, savedPosts });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Failed to get profile posts!" });
   }
 };

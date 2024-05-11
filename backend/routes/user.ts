@@ -5,6 +5,7 @@ import {
   getUsers,
   savePost,
   updateUser,
+  profilePosts,
 } from "../controllers/user";
 import { verifyToken } from "../middleware/verifyToken";
 
@@ -85,9 +86,10 @@ userRouter.post("/img/:id", upload.single("image"), async (req, res) => {
 });
 
 userRouter.get("/", getUsers);
-userRouter.get("/:id", verifyToken, getUser);
+// userRouter.get("/:id", verifyToken, getUser);
 userRouter.put("/:id", verifyToken, updateUser);
 userRouter.delete(":/id", verifyToken, deleteUser);
 userRouter.post("/save", verifyToken, savePost);
+userRouter.get("/profilePosts", verifyToken, profilePosts);
 
 export default userRouter;
