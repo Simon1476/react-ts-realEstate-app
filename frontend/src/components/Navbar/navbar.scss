@@ -132,15 +132,15 @@ nav{
     .menu {
       display: flex;
       flex-direction: column;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
+      width: 50%;
+      height: 100vh;
       position: absolute;
       top: 0;
       right: -50%;
-      width: 50%;
-      height: 100vh;
-      background-color: black;
       color: white;
+      background-color: black;
       transition: all 1s ease;
       font-size: 24px;
 

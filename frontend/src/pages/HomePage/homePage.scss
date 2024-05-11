@@ -55,9 +55,11 @@
   }
   .imgContainer {
     flex: 2;
-    background-color: #F0F0F0;
+    display: flex;
+    align-items: center;
     position: relative;
-
+    background-color: #F0F0F0;
+    
     @include md {
       display: none;
     }
