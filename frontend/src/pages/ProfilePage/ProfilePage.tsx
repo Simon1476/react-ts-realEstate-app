@@ -6,10 +6,12 @@ import "./profilePage.scss";
 import { Suspense, useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { GetPosts } from "../../types/loaders/post";
+import { GetChats } from "../../types/loaders/chat";
 
 const ProfilePage = () => {
   const data = useLoaderData() as {
     postResponse: { data: { userPosts: GetPosts; savedPosts: GetPosts } };
+    chatResponse: { data: GetChats };
   };
 
   const { updateUser, currentUser } = useContext(AuthContext);
@@ -83,7 +85,14 @@ const ProfilePage = () => {
       </div>
       <div className="chatContainer">
         <div className="wrapper">
-          <Chat />
+          <Suspense fallback={<p>Loading...</p>}>
+            <Await
+              resolve={data.chatResponse}
+              errorElement={<p>Error loading chats!</p>}
+            >
+              {(chatResponse) => <Chat chats={chatResponse.data} />}
+            </Await>
+          </Suspense>
         </div>
       </div>
     </div>
