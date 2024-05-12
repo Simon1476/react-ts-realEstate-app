@@ -3,8 +3,10 @@ import cors from "cors";
 import dotenv from "dotenv";
 import postRouter from "./routes/post";
 import authRouter from "./routes/auth";
-import cookieParser from "cookie-parser";
 import userRouter from "./routes/user";
+import messageRouter from "./routes/message";
+import chatRouter from "./routes/chat";
+import cookieParser from "cookie-parser";
 
 dotenv.config();
 const app: Express = express();
@@ -17,6 +19,8 @@ app.use(cookieParser());
 app.use("/api/posts", postRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/users", userRouter);
+app.use("/api/chats", chatRouter);
+app.use("/api/messages", messageRouter);
 
 app.listen(port, () => {
   console.log(`[server]: Server is running at <https://localhost>:${port}`);
