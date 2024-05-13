@@ -9,7 +9,7 @@ type UserInfo = {
 };
 
 type AuthContextValue = {
-  currentUser: UserInfo | null;
+  currentUser: UserInfo;
   updateUser: (data: UserInfo) => void;
 };
 
@@ -26,7 +26,16 @@ const getInitialState = () => {
   return user ? JSON.parse(user) : {};
 };
 
-export const AuthContext = createContext<AuthContextValue | null>(null);
+export const AuthContext = createContext<AuthContextValue>({
+  currentUser: {
+    id: "",
+    email: "",
+    username: "",
+    avatar: "",
+    createdAt: "",
+  },
+  updateUser: () => {},
+});
 
 export const AuthContextProvider = ({
   children,

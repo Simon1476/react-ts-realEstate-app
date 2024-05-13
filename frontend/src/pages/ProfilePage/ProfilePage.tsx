@@ -21,7 +21,13 @@ const ProfilePage = () => {
   const handleLogout = async () => {
     try {
       await apiRequest.post("/auth/logout");
-      updateUser(null);
+      updateUser({
+        id: "",
+        email: "",
+        username: "",
+        avatar: "",
+        createdAt: "",
+      });
       navigate("/");
     } catch (error) {
       console.log(error);

@@ -2,6 +2,7 @@ export type Receiver = {
   id: string;
   username: string;
   avatar: string | null;
+  chatId: string;
 };
 
 export type GetChats = {

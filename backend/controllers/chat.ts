@@ -11,6 +11,9 @@ export const getChats: RequestHandler = async (req, res) => {
           hasSome: [tokenUserId],
         },
       },
+      include: {
+        receiver: true,
+      },
     });
 
     for (const chat of chats) {
