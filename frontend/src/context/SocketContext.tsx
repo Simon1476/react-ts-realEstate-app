@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { io } from "socket.io-client";
+import { Socket, io } from "socket.io-client";
 import { AuthContext } from "./AuthContext";
 
 type SocketData = {
@@ -19,7 +19,10 @@ interface ClientToServerEvents {
   newUser: (id: string) => void;
 }
 
-export const SocketContext = createContext();
+export const SocketContext = createContext<Socket<
+  ServerToClientEvents,
+  ClientToServerEvents
+> | null>(null);
 
 export const SocketContextProvider = ({
   children,
@@ -27,19 +30,20 @@ export const SocketContextProvider = ({
   children: React.ReactNode;
 }) => {
   const { currentUser } = useContext(AuthContext);
-  const [socket, setSocket] = useState(null);
+  const [socket, setSocket] = useState<Socket<
+    ServerToClientEvents,
+    ClientToServerEvents
+  > | null>(null);
 
   useEffect(() => {
     setSocket(io("http://localhost:4000"));
   }, []);
 
   useEffect(() => {
-    currentUser && socket?.emit("newUser", currentUser.id);
+    currentUser.id && socket?.emit("newUser", currentUser.id);
   }, [currentUser, socket]);
 
   return (
-    <SocketContext.Provider value={{ socket }}>
-      {children}
-    </SocketContext.Provider>
+    <SocketContext.Provider value={socket}>{children}</SocketContext.Provider>
   );
 };

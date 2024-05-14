@@ -1,6 +1,6 @@
 import "./chat.scss";
 import { GetChats, GetSingleChat, Receiver } from "../../types/loaders/chat";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import apiRequest from "../../lib/apiRequest";
 import { format } from "timeago.js";
@@ -31,7 +31,7 @@ type SocketData = {
 
 const Chat = ({ chats }: { chats: GetChats }) => {
   const [chat, setChat] = useState<GetSingleChat>(defaultValue);
-  const { socket } = useContext(SocketContext);
+  const socket = useContext(SocketContext)!;
   const { currentUser } = useContext(AuthContext);
 
   const handleOpenChat = async (chatId: string, receiver: Receiver) => {
