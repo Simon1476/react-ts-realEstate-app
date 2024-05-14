@@ -5,6 +5,7 @@ import "react-quill/dist/quill.snow.css";
 import axios from "axios";
 import apiRequest from "../../lib/apiRequest";
 import { useNavigate } from "react-router-dom";
+import UploadWidget from "../../components/UploadWidget/UploadWidget";
 
 const NewPostPage = () => {
   const [value, setValue] = useState("");
@@ -158,6 +159,15 @@ const NewPostPage = () => {
         </div>
       </div>
       <div className="sideContainer">
+        <UploadWidget
+          uwConfig={{
+            multiple: true,
+            cloudName: "dtw7eohm1",
+            uploadPreset: "estate",
+            folder: "posts",
+          }}
+          setImages={setImages}
+        />
         {images.map((image, index) => (
           <img src={image} key={index} alt="" />
         ))}
