@@ -12,12 +12,20 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
+import { useNotificationStore } from "../../lib/notificationStore";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
 
   const { currentUser } = useContext(AuthContext);
 
+  const fetch = useNotificationStore((state) => state.fetch);
+  const number = useNotificationStore((state) => state.number);
+
+  const isUser = Object.keys(currentUser).length !== 0;
+  if (isUser) {
+    fetch();
+  }
   return (
     <nav>
       <div className="links">
@@ -31,18 +39,12 @@ const Navbar = () => {
         <a href="/">Agents</a>
       </div>
       <div className="sign">
-        {currentUser ? (
+        {isUser ? (
           <div className="user">
-            <img
-              src={
-                currentUser.avatar ||
-                "https://cdn.pixabay.com/photo/2024/03/14/08/52/pug-8632718_1280.jpg"
-              }
-              alt=""
-            />
+            <img src={currentUser.avatar || "noavatar.jpg"} alt="" />
             <span>{currentUser.username}</span>
             <Link to="/profile" className="profile">
-              <div className="notification">5</div>
+              {number > 0 && <div className="notification">{number}</div>}
               <span>Profile</span>
             </Link>
           </div>
