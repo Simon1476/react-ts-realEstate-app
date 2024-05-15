@@ -42,10 +42,10 @@ const getUser = (userId: string) => {
 io.on("connection", (socket) => {
   socket.on("newUser", (userId: string) => {
     addUser(userId, socket.id);
-    console.log(onlineUser);
   });
 
   socket.on("sendMessage", ({ receiverId, data }) => {
+    console.log("socket seMessage 수신");
     const receiver = getUser(receiverId);
     if (receiver?.socketId) {
       io.to(receiver.socketId).emit("getMessage", data);
