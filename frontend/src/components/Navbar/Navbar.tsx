@@ -22,7 +22,8 @@ const Navbar = () => {
   const fetch = useNotificationStore((state) => state.fetch);
   const number = useNotificationStore((state) => state.number);
 
-  const isUser = Object.keys(currentUser).length !== 0;
+  const isUser =
+    Object.keys(currentUser).length !== 0 && currentUser.username !== "";
   if (isUser) {
     fetch();
   }
@@ -34,7 +35,7 @@ const Navbar = () => {
           <span>SimonEstate</span>
         </a>
         <a href="/">Home</a>
-        <a href="/">About</a>
+        <a href="/list">List</a>
         <a href="/">Contact</a>
         <a href="/">Agents</a>
       </div>

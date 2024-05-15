@@ -1,19 +1,19 @@
 import "./chat.scss";
 import { GetChats, GetSingleChat, Receiver } from "../../types/loaders/chat";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import apiRequest from "../../lib/apiRequest";
 import { format } from "timeago.js";
-import { SocketContext } from "../../context/SocketContext";
+// import { SocketContext } from "../../context/SocketContext";
 import { useNotificationStore } from "../../lib/notificationStore";
 
-type SocketData = {
-  id: string;
-  text: string;
-  userId: string;
-  chatId: string;
-  createdAt: string;
-};
+// type SocketData = {
+//   id: string;
+//   text: string;
+//   userId: string;
+//   chatId: string;
+//   createdAt: string;
+// };
 
 const Chat = ({ chats }: { chats: GetChats }) => {
   const defaultValue: GetSingleChat = {
@@ -31,7 +31,7 @@ const Chat = ({ chats }: { chats: GetChats }) => {
     },
   };
   const [chat, setChat] = useState<GetSingleChat>(defaultValue);
-  const socket = useContext(SocketContext)!;
+  // const socket = useContext(SocketContext)!;
   const { currentUser } = useContext(AuthContext);
 
   const decrease = useNotificationStore((state) => state.decrease);
@@ -49,7 +49,7 @@ const Chat = ({ chats }: { chats: GetChats }) => {
       console.log(error);
     }
   };
-  console.log("handlesubmit외부", chat.messages);
+  // console.log("handlesubmit외부", chat.messages);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -64,45 +64,45 @@ const Chat = ({ chats }: { chats: GetChats }) => {
       setChat((prev) => ({ ...prev, messages: [...prev.messages, res.data] }));
       console.log(chat.messages);
       (e.target as HTMLFormElement).reset();
-      socket.emit("sendMessage", {
-        receiverId: chat.receiver.id,
-        data: res.data,
-      });
+      // socket.emit("sendMessage", {
+      //   receiverId: chat.receiver.id,
+      //   data: res.data,
+      // });
     } catch (error) {
       console.log(error);
     }
   };
 
-  useEffect(() => {
-    console.log("실행");
-    const read = async () => {
-      try {
-        await apiRequest.put("/chats/read/" + chat.id);
-      } catch (error) {
-        console.log(error);
-      }
-    };
+  // useEffect(() => {
+  //   console.log("실행");
+  //   const read = async () => {
+  //     try {
+  //       await apiRequest.put("/chats/read/" + chat.id);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
 
-    console.log("chat", chat);
-    console.log("socket", socket);
-    if (chat && socket) {
-      console.log("chat && socket 조건문");
-    }
-    if (chat && socket) {
-      socket.on("getMessage", (data: SocketData) => {
-        console.log(`chat.id =${chat.id}`);
-        console.log(`data.chatId =${data.chatId}`);
-        if (chat.id === data.chatId) {
-          setChat((prev) => ({ ...prev, messages: [...prev.messages, data] }));
-          read();
-        }
-      });
-    }
+  //   console.log("chat", chat);
+  //   console.log("socket", socket);
+  //   if (chat && socket) {
+  //     console.log("chat && socket 조건문");
+  //   }
+  //   if (chat && socket) {
+  //     socket.on("getMessage", (data: SocketData) => {
+  //       console.log(`chat.id =${chat.id}`);
+  //       console.log(`data.chatId =${data.chatId}`);
+  //       if (chat.id === data.chatId) {
+  //         setChat((prev) => ({ ...prev, messages: [...prev.messages, data] }));
+  //         read();
+  //       }
+  //     });
+  //   }
 
-    return () => {
-      socket.off("getMessage");
-    };
-  }, [socket, chat]);
+  //   return () => {
+  //     socket.off("getMessage");
+  //   };
+  // }, [socket, chat]);
 
   return (
     <div className="chat">

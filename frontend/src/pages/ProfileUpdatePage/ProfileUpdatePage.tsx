@@ -5,7 +5,7 @@ import apiRequest from "../../lib/apiRequest";
 
 import "./profileUpdatePage.scss";
 import { useNavigate } from "react-router-dom";
-import UploadWidget from "../../components/UploadWidget/UploadWidget";
+import ProfileUpload from "../../components/ProfileUpload/ProfileUpload";
 
 const ProfileUpdatePage = () => {
   const { currentUser, updateUser } = useContext(AuthContext);
@@ -100,7 +100,7 @@ const ProfileUpdatePage = () => {
           alt="Avatar image"
           className="avatar"
         />
-        <UploadWidget
+        <ProfileUpload
           uwConfig={{
             multiple: false,
             cloudName: "dtw7eohm1",
