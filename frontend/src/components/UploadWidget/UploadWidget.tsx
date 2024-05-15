@@ -18,8 +18,10 @@ type CloudinaryUploadWidgetProps = {
     cloudName: string;
     uploadPreset: string;
     folder: string;
+    maxImageFileSize?: number;
   };
-  setImages: React.Dispatch<React.SetStateAction<string[]>>;
+  setImages?: React.Dispatch<React.SetStateAction<string[]>>;
+  setAvatar?: React.Dispatch<React.SetStateAction<string[]>>;
 };
 
 type CloudinaryUploadResult = {
@@ -30,7 +32,11 @@ type CloudinaryUploadResult = {
 type CloudinaryUploadInfo = {
   secure_url: string;
 };
-function UploadWidget({ uwConfig, setImages }: CloudinaryUploadWidgetProps) {
+function UploadWidget({
+  uwConfig,
+  setImages,
+  setAvatar,
+}: CloudinaryUploadWidgetProps) {
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
@@ -56,7 +62,7 @@ function UploadWidget({ uwConfig, setImages }: CloudinaryUploadWidgetProps) {
         (error: any, result: CloudinaryUploadResult) => {
           if (!error && result && result.event === "success") {
             console.log("Done! Here is the image info: ", result.info);
-            setImages((prev) => [...prev, result.info.secure_url]);
+            setAvatar((prev) => [...prev, result.info.secure_url]);
           }
         }
       );

@@ -5,43 +5,41 @@ import apiRequest from "../../lib/apiRequest";
 
 import "./profileUpdatePage.scss";
 import { useNavigate } from "react-router-dom";
+import UploadWidget from "../../components/UploadWidget/UploadWidget";
 
 const ProfileUpdatePage = () => {
   const { currentUser, updateUser } = useContext(AuthContext);
 
-  const [file, setFile] = useState<File | null>(null);
-  const [caption, setCaption] = useState("");
-
   const [error, setError] = useState("");
-  const [avatar, setAvatar] = useState(currentUser.avatar);
+  const [avatar, setAvatar] = useState<string[]>([]);
 
   const navigate = useNavigate();
 
-  const handleUploadImage = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  // const handleUploadImage = async (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
 
-    const formData = new FormData();
+  //   const formData = new FormData();
 
-    if (file) {
-      formData.append("image", file);
-    }
+  //   if (file) {
+  //     formData.append("image", file);
+  //   }
 
-    formData.append("caption", caption);
+  //   formData.append("caption", caption);
 
-    await apiRequest.post(`/users/img/${currentUser.id}`, formData, {
-      headers: { "Content-Type": "multipart/form-data" },
-    });
-  };
+  //   await apiRequest.post(`/users/img/${currentUser.id}`, formData, {
+  //     headers: { "Content-Type": "multipart/form-data" },
+  //   });
+  // };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedFile = e.target.files?.[0];
-    if (selectedFile) {
-      setFile(selectedFile);
-    } else {
-      // Handle the case where no file is selected (optional)
-      console.log("No file selected");
-    }
-  };
+  // const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const selectedFile = e.target.files?.[0];
+  //   if (selectedFile) {
+  //     setFile(selectedFile);
+  //   } else {
+  //     // Handle the case where no file is selected (optional)
+  //     console.log("No file selected");
+  //   }
+  // };
 
   const handleUpdateUser = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -51,12 +49,11 @@ const ProfileUpdatePage = () => {
     const { username, email, password } = Object.fromEntries(formData);
 
     try {
-      await apiRequest.get(`/users/img/${currentUser.id}`);
-
       const res = await apiRequest.put(`/users/${currentUser.id}`, {
         username,
         email,
         password,
+        avatar: avatar[0],
       });
       updateUser(res.data);
       navigate("/profile");
@@ -99,11 +96,21 @@ const ProfileUpdatePage = () => {
       </div>
       <div className="sideContainer">
         <img
-          src={avatar || "/noavatar.jpg"}
+          src={avatar[0] || "/noavatar.jpg"}
           alt="Avatar image"
           className="avatar"
         />
-        <form onSubmit={handleUploadImage}>
+        <UploadWidget
+          uwConfig={{
+            multiple: false,
+            cloudName: "dtw7eohm1",
+            uploadPreset: "estate",
+            folder: "avatats",
+            maxImageFileSize: 2000000,
+          }}
+          setAvatar={setAvatar}
+        />
+        {/* <form onSubmit={handleUploadImage}>
           <input
             onChange={handleFileChange}
             type="file"
@@ -118,7 +125,7 @@ const ProfileUpdatePage = () => {
             placeholder="Caption"
           ></input>
           <button type="submit">Submit</button>
-        </form>
+        </form> */}
       </div>
     </div>
   );

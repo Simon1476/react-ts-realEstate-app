@@ -5,21 +5,7 @@ import { AuthContext } from "../../context/AuthContext";
 import apiRequest from "../../lib/apiRequest";
 import { format } from "timeago.js";
 import { SocketContext } from "../../context/SocketContext";
-
-const defaultValue: GetSingleChat = {
-  id: "",
-  userIDs: [""],
-  createdAt: "",
-  seenBy: [""],
-  lastMessage: "",
-  messages: [],
-  receiver: {
-    id: "",
-    username: "",
-    avatar: "",
-    chatId: "",
-  },
-};
+import { useNotificationStore } from "../../lib/notificationStore";
 
 type SocketData = {
   id: string;
@@ -30,13 +16,32 @@ type SocketData = {
 };
 
 const Chat = ({ chats }: { chats: GetChats }) => {
+  const defaultValue: GetSingleChat = {
+    id: "",
+    userIDs: [""],
+    createdAt: "",
+    seenBy: [""],
+    lastMessage: "",
+    messages: [],
+    receiver: {
+      id: "",
+      username: "",
+      avatar: "",
+      chatId: "",
+    },
+  };
   const [chat, setChat] = useState<GetSingleChat>(defaultValue);
   const socket = useContext(SocketContext)!;
   const { currentUser } = useContext(AuthContext);
 
+  const decrease = useNotificationStore((state) => state.decrease);
+
   const handleOpenChat = async (chatId: string, receiver: Receiver) => {
     try {
       const res = await apiRequest("/chats/" + chatId);
+      if (!res.data.seenBy.includes(currentUser.id)) {
+        decrease();
+      }
       console.log(res);
 
       setChat({ ...res.data, receiver });
@@ -44,6 +49,7 @@ const Chat = ({ chats }: { chats: GetChats }) => {
       console.log(error);
     }
   };
+  console.log("handlesubmit외부", chat.messages);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -54,9 +60,10 @@ const Chat = ({ chats }: { chats: GetChats }) => {
     if (!text) return;
     try {
       const res = await apiRequest.post("/messages/" + chat.id, { text });
-      console.log(res);
 
       setChat((prev) => ({ ...prev, messages: [...prev.messages, res.data] }));
+      console.log(chat.messages);
+      (e.target as HTMLFormElement).reset();
       socket.emit("sendMessage", {
         receiverId: chat.receiver.id,
         data: res.data,
@@ -67,6 +74,7 @@ const Chat = ({ chats }: { chats: GetChats }) => {
   };
 
   useEffect(() => {
+    console.log("실행");
     const read = async () => {
       try {
         await apiRequest.put("/chats/read/" + chat.id);
@@ -75,8 +83,15 @@ const Chat = ({ chats }: { chats: GetChats }) => {
       }
     };
 
+    console.log("chat", chat);
+    console.log("socket", socket);
+    if (chat && socket) {
+      console.log("chat && socket 조건문");
+    }
     if (chat && socket) {
       socket.on("getMessage", (data: SocketData) => {
+        console.log(`chat.id =${chat.id}`);
+        console.log(`data.chatId =${data.chatId}`);
         if (chat.id === data.chatId) {
           setChat((prev) => ({ ...prev, messages: [...prev.messages, data] }));
           read();
@@ -118,7 +133,7 @@ const Chat = ({ chats }: { chats: GetChats }) => {
               <img src={chat.receiver?.avatar || "noavatar.jpg"} alt="" />
               {chat.receiver?.username}
             </div>
-            <span className="close" onClick={() => setChat(null)}>
+            <span className="close" onClick={() => setChat(defaultValue)}>
               X
             </span>
           </div>
