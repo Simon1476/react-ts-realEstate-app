@@ -18,20 +18,20 @@
 
 ### ✔️Environment
 
-<img src="https://img.shields.io/badge/visualstudio-297ACC?style=for-the-badge&logo=visualstudio&logoColor=white"><img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white"><img src="https://img.shields.io/badge/github-black?style=for-the-badge&logo=github&logoColor=white">
+<img src="https://img.shields.io/badge/visualstudio-297ACC?style=for-the-badge&logo=visualstudio&logoColor=white"> <img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white"> <img src="https://img.shields.io/badge/github-black?style=for-the-badge&logo=github&logoColor=white">
 
 
 
 ### ✔️Frond-end
 
-<img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=black"><img src="https://img.shields.io/badge/typescript-2F74C0?style=for-the-badge&logo=typescript&logoColor=white"><img src="https://img.shields.io/badge/axios-black?style=for-the-badge&logo=axios&logoColor=671DDF"><img src="https://img.shields.io/badge/zustand-black?style=for-the-badge&logo=zustand&logoColor=671DDF">
+<img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=black"> <img src="https://img.shields.io/badge/typescript-2F74C0?style=for-the-badge&logo=typescript&logoColor=white"> <img src="https://img.shields.io/badge/axios-black?style=for-the-badge&logo=axios&logoColor=671DDF"> <img src="https://img.shields.io/badge/zustand-black?style=for-the-badge&logo=zustand&logoColor=671DDF">
 
 
 
 
 ### ✔️Back-end
 
-<img src="https://img.shields.io/badge/express-green?style=for-the-badge&logo=express&logoColor=671DDF"><img src="https://img.shields.io/badge/typescript-2F74C0?style=for-the-badge&logo=typescript&logoColor=white"> <imgsrc="https://img.shields.io/badge/mongodb-FFFFFF?style=for-the-badge&logo=mongodb&logoColor=#4CA43E"><img src="https://img.shields.io/badge/prisma-black?style=for-the-badge&logo=prisma&logoColor=#4CA43E">
+<img src="https://img.shields.io/badge/express-green?style=for-the-badge&logo=express&logoColor=671DDF"> <img src="https://img.shields.io/badge/typescript-2F74C0?style=for-the-badge&logo=typescript&logoColor=white"> <img src="https://img.shields.io/badge/mongodb-FFFFFF?style=for-the-badge&logo=mongodb&logoColor=#4CA43E"> <img src="https://img.shields.io/badge/prisma-black?style=for-the-badge&logo=prisma&logoColor=#4CA43E">
 
 ## 추가할 기능
 
